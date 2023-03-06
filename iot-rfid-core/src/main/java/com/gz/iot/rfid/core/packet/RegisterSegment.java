@@ -11,7 +11,7 @@ import lombok.Data;
  * @description 注册指令报文体
  */
 @Data
-public class RegistrationSegment {
+public class RegisterSegment {
     /**
      * 设备描述码 高字节为设备类型（1字节）
      */
@@ -25,9 +25,9 @@ public class RegistrationSegment {
     /**
      * 注册码（4字节）
      */
-    private int registrationCode;
+    private int registerCode;
 
-    public RegistrationSegment(ByteBuf byteBuf) {
+    public RegisterSegment(ByteBuf byteBuf) {
         if (byteBuf.isReadable(1)) {
             this.deviceType = DeviceType.fromCode(byteBuf.readByte());
         }
@@ -35,7 +35,7 @@ public class RegistrationSegment {
             this.deviceModel = DeviceModel.fromCode(byteBuf.readByte());
         }
         if (byteBuf.isReadable(4)) {
-            this.registrationCode = byteBuf.readInt();
+            this.registerCode = byteBuf.readInt();
         }
     }
 }

@@ -1,7 +1,7 @@
-package com.gz.iot.rfid.fe.server;
+package com.gz.iot.rfid.be.server;
 
+import com.gz.iot.rfid.be.config.NettyConfig;
 import com.gz.iot.rfid.core.utils.VerificationUtils;
-import com.gz.iot.rfid.fe.config.NettyConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author luojie
- * @createTime 2023/03/04 18:32
+ * @createTime 2023/03/05 00:45
  * @description 检查处理器，检查起始标识与校验码
  */
 @Slf4j

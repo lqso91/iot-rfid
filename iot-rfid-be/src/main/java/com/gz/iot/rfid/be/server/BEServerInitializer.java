@@ -1,6 +1,6 @@
-package com.gz.iot.rfid.fe.server;
+package com.gz.iot.rfid.be.server;
 
-import com.gz.iot.rfid.fe.config.NettyConfig;
+import com.gz.iot.rfid.be.config.NettyConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -11,21 +11,18 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author luojie
- * @createTime 2023/03/04 18:32
+ * @createTime 2023/03/05 00:45
  * @description 初始化通道
  */
 @Slf4j
 @Component
-public class FEServerInitializer extends ChannelInitializer<SocketChannel> {
+public class BEServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Autowired
     private NettyConfig nettyConfig;
 
     @Autowired
     private CheckHandler checkHandler;
-
-    @Autowired
-    private RegisterCommandHandler registerCommandHandler;
 
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -44,7 +41,6 @@ public class FEServerInitializer extends ChannelInitializer<SocketChannel> {
                 nettyConfig.getLengthAdjustment(),
                 nettyConfig.getInitialBytesToStrip()));
         pipeline.addLast(checkHandler);
-        pipeline.addLast(registerCommandHandler);
         log.info("init channel completed.");
     }
 }

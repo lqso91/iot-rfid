@@ -3,6 +3,7 @@ package com.gz.iot.rfid.core.packet;
 import com.gz.iot.rfid.core.enums.Command;
 import com.gz.iot.rfid.core.enums.Version;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import lombok.Data;
 
 import java.nio.charset.StandardCharsets;
@@ -14,6 +15,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Data
 public class HeaderSegment {
+    public static final int SEGMENT_LENGTH = 28;
     /**
      * 报文总长度（2字节），含报文头与报文体的字节数（不含起始标识符与校验）
      */
@@ -45,24 +47,38 @@ public class HeaderSegment {
      */
     private String deviceID;
 
+    public HeaderSegment() {
+    }
+
     public HeaderSegment(ByteBuf byteBuf) {
-        if(byteBuf.isReadable(2)){
+        if (byteBuf.isReadable(2)) {
             this.length = byteBuf.readUnsignedShort();
         }
-        if(byteBuf.isReadable(2)){
+        if (byteBuf.isReadable(2)) {
             this.command = Command.fromCode(byteBuf.readUnsignedShort());
         }
-        if(byteBuf.isReadable(4)){
+        if (byteBuf.isReadable(4)) {
             this.serialNumber = byteBuf.readInt();
         }
-        if(byteBuf.isReadable(2)){
+        if (byteBuf.isReadable(2)) {
             this.version = Version.fromCode(byteBuf.readUnsignedShort());
         }
-        if(byteBuf.isReadable(2)){
+        if (byteBuf.isReadable(2)) {
             this.securityCode = byteBuf.readUnsignedShort();
         }
-        if(byteBuf.isReadable(16)){
+        if (byteBuf.isReadable(16)) {
             this.deviceID = byteBuf.readCharSequence(16, StandardCharsets.US_ASCII).toString();
         }
+    }
+
+    public ByteBuf toByteBuf() {
+        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(SEGMENT_LENGTH);
+        byteBuf.writeShort(length);
+        byteBuf.writeShort(command.getCode());
+        byteBuf.writeInt(serialNumber);
+        byteBuf.writeShort(version.getCode());
+        byteBuf.writeShort(securityCode);
+        byteBuf.writeBytes(deviceID.getBytes(StandardCharsets.US_ASCII));
+        return byteBuf;
     }
 }

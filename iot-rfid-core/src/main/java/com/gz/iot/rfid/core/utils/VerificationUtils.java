@@ -32,17 +32,24 @@ public class VerificationUtils {
     };
 
     /**
-     * 循环冗余校验-16（CCITT标准-0x1021）
+     * 查表法： 循环冗余校验-16（CCITT标准-0x1021）
      */
     public static int crc16(byte[] data) {
-        int crc_reg = 0x0000;
-        for (int i = 0; i < data.length; i++) {
-            crc_reg = (crc_reg >> 8) ^ crc16_table[(crc_reg ^ data[i]) & 0xff];
-        }
-        return crc_reg;
+        // 查表法有些问题
+//        int crc = 0xFFFF;
+//        for (byte b : data) {
+//            int da = (crc / 256) & 0xFF;
+//            crc = (crc << 8) & 0xFFFF;
+//            crc = (crc ^ crc16_table[da ^ (int) b]) & 0xFFFF;
+//        }
+//        return crc;
+        return crc16_2(data);
     }
 
-    public static int crc16_2(byte[] data) {
+    /**
+     * 计算法： 循环冗余校验-16（CCITT标准-0x1021）
+     */
+    private static int crc16_2(byte[] data) {
         int crc = 0xFFFF;
 
         for (byte datum : data) {
@@ -63,7 +70,7 @@ public class VerificationUtils {
                 85, -86, 0, 34, 0, 8, 0, 0, 0, 3, 2, 0, 0, 0, 50, 50, 49, 48, 49, 56, 53, 48, 49, 48, 48, 48, 48, 53, 50, 0, 1, 3, 120, 86, 52, 18, 92, -108
         };
 
-        System.out.println(packet.length);
+        System.out.println(packet.length);  // 38
 
         byte[] data = new byte[]{
                 0, 34, 0, 8, 0, 0, 0, 3, 2, 0, 0, 0, 50, 50, 49, 48, 49, 56, 53, 48, 49, 48, 48, 48, 48, 53, 50, 0, 1, 3, 120, 86, 52, 18
@@ -74,6 +81,7 @@ public class VerificationUtils {
         buffer.writeByte(-108);
 
         int crc = buffer.readUnsignedShort();
-        System.out.println(crc16_2(data) == crc);
+        System.out.println(crc + ":" + Integer.toBinaryString(crc));    // 23700:101110010010100
+        System.out.println(crc16(data) + ":" + Integer.toBinaryString(crc16(data)));    // 23700:101110010010100
     }
 }
