@@ -35,15 +35,13 @@ public class VerificationUtils {
      * 查表法： 循环冗余校验-16（CCITT标准-0x1021）
      */
     public static int crc16(byte[] data) {
-        // 查表法有些问题
-//        int crc = 0xFFFF;
-//        for (byte b : data) {
-//            int da = (crc / 256) & 0xFF;
-//            crc = (crc << 8) & 0xFFFF;
-//            crc = (crc ^ crc16_table[da ^ (int) b]) & 0xFFFF;
-//        }
-//        return crc;
-        return crc16_2(data);
+        int crc = 0xFFFF;
+        for (byte b : data) {
+            int da = (crc / 256) & 0xFF;
+            crc = (crc << 8) & 0xFFFF;
+            crc = (crc ^ crc16_table[(da ^ b) & 0xFF]) & 0xFFFF;
+        }
+        return crc;
     }
 
     /**
