@@ -1,6 +1,6 @@
-package com.gz.iot.rfid.be.server;
+package com.gz.iot.rfid.core.server;
 
-import com.gz.iot.rfid.be.config.NettyConfig;
+import com.gz.iot.rfid.core.config.NettyConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author luojie
- * @createTime 2023/03/05 00:45
+ * @createTime 2023/03/04 18:32
  * @description 初始化通道
  */
 @Slf4j
@@ -41,6 +41,6 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
                 nettyConfig.getLengthAdjustment(),
                 nettyConfig.getInitialBytesToStrip()));
         pipeline.addLast(dispatcher);
-        log.info("init channel completed.");
+        log.info("Channel initialized");
     }
 }

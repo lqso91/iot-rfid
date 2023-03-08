@@ -1,14 +1,15 @@
 package com.gz.iot.rfid.fe.handler;
 
+import com.gz.iot.rfid.core.config.NettyConfig;
 import com.gz.iot.rfid.core.enums.Command;
 import com.gz.iot.rfid.core.enums.RegisterResult;
 import com.gz.iot.rfid.core.enums.Version;
 import com.gz.iot.rfid.core.packet.HeaderSegment;
 import com.gz.iot.rfid.core.packet.Packet;
 import com.gz.iot.rfid.core.packet.body.RegisterAckSegment;
+import com.gz.iot.rfid.core.server.HandlerContainer;
 import com.gz.iot.rfid.core.utils.SerialNumberUtils;
 import com.gz.iot.rfid.core.utils.VerificationUtils;
-import com.gz.iot.rfid.fe.config.NettyConfig;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandler;
@@ -38,10 +39,10 @@ public class RegisterHandler extends SimpleChannelInboundHandler<Packet> {
     private HandlerContainer handlerContainer;
 
     @PostConstruct
-    private void add() {
+    private void addHandler() {
         handlerContainer.put(Command.REGISTER, this);
     }
-
+    
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet packet) throws Exception {
         log.info("RegisterCommandHandler channelRead0, {}", packet.getBodySegment().toString());

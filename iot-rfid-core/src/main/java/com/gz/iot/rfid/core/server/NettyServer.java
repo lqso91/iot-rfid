@@ -1,6 +1,6 @@
-package com.gz.iot.rfid.fe.server;
+package com.gz.iot.rfid.core.server;
 
-import com.gz.iot.rfid.fe.config.NettyConfig;
+import com.gz.iot.rfid.core.config.NettyConfig;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author luojie
  * @createTime 2023/03/04 18:32
- * @description FE Netty Server
+ * @description Netty Server
  */
 @Slf4j
 @Component

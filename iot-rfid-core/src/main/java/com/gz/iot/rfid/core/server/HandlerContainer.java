@@ -1,4 +1,4 @@
-package com.gz.iot.rfid.be.handler;
+package com.gz.iot.rfid.core.server;
 
 import com.gz.iot.rfid.core.enums.Command;
 import io.netty.channel.ChannelInboundHandler;
@@ -28,7 +28,7 @@ public class HandlerContainer {
     public boolean contains(Command command) {
         return map.containsKey(command);
     }
-
+    
     public Set<Command> commands() {
         return map.keySet();
     }

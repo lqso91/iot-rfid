@@ -1,17 +1,15 @@
-package com.gz.iot.rfid.fe.server;
+package com.gz.iot.rfid.core.server;
 
+import com.gz.iot.rfid.core.config.NettyConfig;
 import com.gz.iot.rfid.core.enums.Command;
 import com.gz.iot.rfid.core.packet.HeaderSegment;
 import com.gz.iot.rfid.core.packet.Packet;
 import com.gz.iot.rfid.core.packet.body.BodySegmentParser;
 import com.gz.iot.rfid.core.packet.body.IBodySegment;
 import com.gz.iot.rfid.core.utils.VerificationUtils;
-import com.gz.iot.rfid.fe.config.NettyConfig;
-import com.gz.iot.rfid.fe.handler.HandlerContainer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +58,7 @@ public class Dispatcher extends SimpleChannelInboundHandler<ByteBuf> {
         log.info(header.toString());
 
         // 处理指令
-        ChannelInboundHandler handler = handlerContainer.get(header.getCommand());
-        if (handler == null) {
+        if (!handlerContainer.contains(header.getCommand())) {
             log.error("Dispatcher not found {} handler", header.getCommand().name());
             return;
         }

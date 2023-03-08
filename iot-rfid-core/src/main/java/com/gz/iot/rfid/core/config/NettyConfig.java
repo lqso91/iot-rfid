@@ -1,4 +1,4 @@
-package com.gz.iot.rfid.fe.config;
+package com.gz.iot.rfid.core.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @author luojie
  * @createTime 2023/03/04 20:28
- * @description Netty 配置项
+ * @description Netty配置项
  */
 @Configuration
 @ConfigurationProperties(prefix = "netty")
@@ -16,7 +16,7 @@ public class NettyConfig {
     /**
      * netty端口
      */
-    private int port = 9999;
+    private int port;
     /**
      * 数据包起始标识
      */
