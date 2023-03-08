@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class BEServerInitializer extends ChannelInitializer<SocketChannel> {
+public class ServerInitializer extends ChannelInitializer<SocketChannel> {
 
     @Autowired
     private NettyConfig nettyConfig;
 
     @Autowired
-    private CheckHandler checkHandler;
+    private Dispatcher dispatcher;
 
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
@@ -40,7 +40,7 @@ public class BEServerInitializer extends ChannelInitializer<SocketChannel> {
                 nettyConfig.getLengthFieldLength(),
                 nettyConfig.getLengthAdjustment(),
                 nettyConfig.getInitialBytesToStrip()));
-        pipeline.addLast(checkHandler);
+        pipeline.addLast(dispatcher);
         log.info("init channel completed.");
     }
 }

@@ -1,6 +1,6 @@
 package com.gz.iot.rfid.fe;
 
-import com.gz.iot.rfid.fe.server.FEServer;
+import com.gz.iot.rfid.fe.server.NettyServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 public class FEMain {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(FEMain.class, args);
-        FEServer server = ctx.getBean(FEServer.class);
+        NettyServer server = ctx.getBean(NettyServer.class);
         server.start();
     }
 }

@@ -1,4 +1,4 @@
-package com.gz.iot.rfid.core.packet;
+package com.gz.iot.rfid.core.packet.body;
 
 import com.gz.iot.rfid.core.enums.RegisterResult;
 import io.netty.buffer.ByteBuf;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
  * @description 确认注册指令报文体
  */
 @Data
-public class RegisterAckSegment {
+public class RegisterAckSegment implements IBodyAckSegment {
     public static final int SEGMENT_LENGTH = 41;
 
     /**
@@ -37,6 +37,7 @@ public class RegisterAckSegment {
      */
     private int port;
 
+    @Override
     public ByteBuf toByteBuf() {
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(SEGMENT_LENGTH);
         // 注册结果

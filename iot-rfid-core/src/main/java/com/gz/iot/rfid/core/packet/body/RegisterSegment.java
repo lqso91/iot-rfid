@@ -1,5 +1,6 @@
-package com.gz.iot.rfid.core.packet;
+package com.gz.iot.rfid.core.packet.body;
 
+import com.gz.iot.rfid.core.enums.Command;
 import com.gz.iot.rfid.core.enums.DeviceModel;
 import com.gz.iot.rfid.core.enums.DeviceType;
 import io.netty.buffer.ByteBuf;
@@ -11,7 +12,8 @@ import lombok.Data;
  * @description 注册指令报文体
  */
 @Data
-public class RegisterSegment {
+@BodyCommand(Command.REGISTER)
+public class RegisterSegment implements IBodySegment {
     /**
      * 设备描述码 高字节为设备类型（1字节）
      */
@@ -26,8 +28,9 @@ public class RegisterSegment {
      * 注册码（4字节）
      */
     private int registerCode;
-
-    public RegisterSegment(ByteBuf byteBuf) {
+    
+    @Override
+    public IBodySegment parse(ByteBuf byteBuf) {
         if (byteBuf.isReadable(1)) {
             this.deviceType = DeviceType.fromCode(byteBuf.readByte());
         }
@@ -37,5 +40,6 @@ public class RegisterSegment {
         if (byteBuf.isReadable(4)) {
             this.registerCode = byteBuf.readInt();
         }
+        return this;
     }
 }

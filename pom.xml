@@ -20,6 +20,7 @@
         <spring.boot.version>2.7.9</spring.boot.version>
         <netty.version>4.1.89.Final</netty.version>
         <lombok.version>1.18.26</lombok.version>
+        <reflections.version>0.10.2</reflections.version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +42,11 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
