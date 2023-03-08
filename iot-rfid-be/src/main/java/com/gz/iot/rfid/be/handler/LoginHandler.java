@@ -1,13 +1,13 @@
-package com.gz.iot.rfid.fe.handler;
+package com.gz.iot.rfid.be.handler;
 
 import com.gz.iot.rfid.core.config.NettyConfig;
 import com.gz.iot.rfid.core.enums.Command;
-import com.gz.iot.rfid.core.enums.RegisterResult;
+import com.gz.iot.rfid.core.enums.LoginResult;
 import com.gz.iot.rfid.core.enums.ProtocolVersion;
 import com.gz.iot.rfid.core.packet.AckPacket;
 import com.gz.iot.rfid.core.packet.HeaderSegment;
 import com.gz.iot.rfid.core.packet.Packet;
-import com.gz.iot.rfid.core.packet.body.RegisterAckSegment;
+import com.gz.iot.rfid.core.packet.body.LoginAckSegment;
 import com.gz.iot.rfid.core.server.HandlerContainer;
 import com.gz.iot.rfid.core.utils.SerialNumberUtils;
 import io.netty.channel.ChannelHandler;
@@ -22,13 +22,15 @@ import java.time.LocalDateTime;
 
 /**
  * @author luojie
- * @createTime 2023/03/04 22:27
- * @description 注册命令处理器
+ * @createTime 2023/03/08 21:25
+ * @description 处理登录指令
+ * 设备如果登录不成功（没有收到正确的回应），设备会重复发送10次登录请求消息（命令码0x0001），
+ * 10次登录不成功后，会重新向负载均衡服务器（注册服务器），发送注册消息。
  */
 @Slf4j
 @Component
 @ChannelHandler.Sharable
-public class RegisterHandler extends SimpleChannelInboundHandler<Packet> {
+public class LoginHandler extends SimpleChannelInboundHandler<Packet> {
 
     @Autowired
     private NettyConfig nettyConfig;
@@ -38,7 +40,7 @@ public class RegisterHandler extends SimpleChannelInboundHandler<Packet> {
 
     @PostConstruct
     private void addHandler() {
-        handlerContainer.put(Command.REGISTER, this);
+        handlerContainer.put(Command.LOGIN, this);
     }
 
     @Override
@@ -46,10 +48,11 @@ public class RegisterHandler extends SimpleChannelInboundHandler<Packet> {
         log.info("RegisterCommandHandler channelRead0, {}", packet.getBodySegment().toString());
 
         AckPacket ackPacket = new AckPacket();
+
         // 报文头
         HeaderSegment header = new HeaderSegment();
-        header.setCommand(Command.REGISTER_ACK);
-        header.setLength(HeaderSegment.SEGMENT_LENGTH + RegisterAckSegment.SEGMENT_LENGTH);
+        header.setCommand(Command.LOGIN_ACK);
+        header.setLength(HeaderSegment.SEGMENT_LENGTH + LoginAckSegment.SEGMENT_LENGTH);
         header.setSerialNumber(SerialNumberUtils.next());
         header.setProtocolVersion(ProtocolVersion.V_2_0);
         header.setSecurityCode(0x0000);
@@ -57,13 +60,10 @@ public class RegisterHandler extends SimpleChannelInboundHandler<Packet> {
         ackPacket.setHeaderSegment(header);
 
         // 报文体
-        RegisterAckSegment registerAck = new RegisterAckSegment();
-        registerAck.setRegisterResult(RegisterResult.SUCCESS);
-        registerAck.setDateTime(LocalDateTime.now());
-        // TODO 从BE注册列表中获取
-        registerAck.setIp("192.168.0.103");
-        registerAck.setPort(8888);
-        ackPacket.setBodySegment(registerAck);
+        LoginAckSegment loginAck = new LoginAckSegment();
+        loginAck.setLoginResult(LoginResult.SUCCESS);
+        loginAck.setDateTime(LocalDateTime.now());
+        ackPacket.setBodySegment(loginAck);
 
         ctx.fireChannelRead(ackPacket);
     }

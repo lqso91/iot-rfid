@@ -68,8 +68,8 @@ public class Dispatcher extends SimpleChannelInboundHandler<ByteBuf> {
                 ctx.pipeline().remove(channelHandler);
             }
         }
-        ctx.pipeline().addLast(header.getCommand().name(), handlerContainer.get(header.getCommand()));
-
+        ctx.pipeline().addAfter("DISPATCHER", header.getCommand().name(), handlerContainer.get(header.getCommand()));
+        
         Packet packet = new Packet();
         packet.setMagicNumber(magicNumber);
         packet.setHeaderSegment(header);

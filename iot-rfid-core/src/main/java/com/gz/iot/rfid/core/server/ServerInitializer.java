@@ -24,6 +24,9 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
     @Autowired
     private Dispatcher dispatcher;
 
+    @Autowired
+    private Answerer answerer;
+
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline pipeline = socketChannel.pipeline();
@@ -40,7 +43,8 @@ public class ServerInitializer extends ChannelInitializer<SocketChannel> {
                 nettyConfig.getLengthFieldLength(),
                 nettyConfig.getLengthAdjustment(),
                 nettyConfig.getInitialBytesToStrip()));
-        pipeline.addLast(dispatcher);
+        pipeline.addLast("DISPATCHER", dispatcher);
+        pipeline.addLast("ANSWERER", answerer);
         log.info("Channel initialized");
     }
 }

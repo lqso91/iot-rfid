@@ -8,21 +8,21 @@ import lombok.ToString;
  * @description 报文协议版本
  */
 @ToString
-public enum Version {
+public enum ProtocolVersion {
     V_1_0(0x0100, "V1.0"),
     V_2_0(0x0200, "V2.0"),
     UNKNOWN(0x0000, "未知");
 
     private final int code;
-    private final String name;
+    private final String description;
 
-    Version(int code, String name) {
+    ProtocolVersion(int code, String description) {
         this.code = code;
-        this.name = name;
+        this.description = description;
     }
 
-    public static Version fromCode(int code) {
-        for (Version item : Version.values()) {
+    public static ProtocolVersion fromCode(int code) {
+        for (ProtocolVersion item : ProtocolVersion.values()) {
             if (item.code == code) {
                 return item;
             }
@@ -34,7 +34,7 @@ public enum Version {
         return code;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 }

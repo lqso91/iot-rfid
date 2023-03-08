@@ -1,7 +1,7 @@
 package com.gz.iot.rfid.core.packet;
 
 import com.gz.iot.rfid.core.enums.Command;
-import com.gz.iot.rfid.core.enums.Version;
+import com.gz.iot.rfid.core.enums.ProtocolVersion;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class HeaderSegment {
     /**
      * 报文协议版本（2字节），V2.0 （专用于MR7902）
      */
-    private Version version;
+    private ProtocolVersion protocolVersion;
 
     /**
      * 报文安全标识（2字节），不加密的报文默认为0x0000
@@ -61,7 +61,7 @@ public class HeaderSegment {
             this.serialNumber = byteBuf.readInt();
         }
         if (byteBuf.isReadable(2)) {
-            this.version = Version.fromCode(byteBuf.readUnsignedShort());
+            this.protocolVersion = ProtocolVersion.fromCode(byteBuf.readUnsignedShort());
         }
         if (byteBuf.isReadable(2)) {
             this.securityCode = byteBuf.readUnsignedShort();
@@ -76,7 +76,7 @@ public class HeaderSegment {
         byteBuf.writeShort(length);
         byteBuf.writeShort(command.getCode());
         byteBuf.writeInt(serialNumber);
-        byteBuf.writeShort(version.getCode());
+        byteBuf.writeShort(protocolVersion.getCode());
         byteBuf.writeShort(securityCode);
         byteBuf.writeBytes(deviceID.getBytes(StandardCharsets.US_ASCII));
         return byteBuf;

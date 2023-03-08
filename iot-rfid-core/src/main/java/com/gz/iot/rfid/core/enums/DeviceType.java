@@ -15,11 +15,11 @@ public enum DeviceType {
     UNKNOWN(0x00, "未知");
 
     private final int code;
-    private final String name;
+    private final String description;
 
-    DeviceType(int code, String name) {
+    DeviceType(int code, String description) {
         this.code = code;
-        this.name = name;
+        this.description = description;
     }
 
     public static DeviceType fromCode(int code) {
@@ -35,7 +35,7 @@ public enum DeviceType {
         return code;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 }

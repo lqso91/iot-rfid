@@ -35,11 +35,11 @@ public enum Command {
     /**
      * 命令名称
      */
-    private final String name;
+    private final String description;
 
-    Command(int code,String name) {
+    Command(int code,String description) {
         this.code = code;
-        this.name = name;
+        this.description = description;
     }
 
     public static Command fromCode(int code) {
@@ -55,7 +55,7 @@ public enum Command {
         return code;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 }

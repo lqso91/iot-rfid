@@ -10,16 +10,16 @@ import lombok.ToString;
 @ToString
 public enum RegisterResult {
     SUCCESS(0x0100, "注册成功"),
-    CODE_ERROR(0x0200, "注册码错误"),
+    ERROR(0x0200, "注册错误"),
     DENIED(0x0200, "注册拒绝"),
     UNKNOWN(0x0000, "未知");
 
     private final int code;
-    private final String name;
+    private final String description;
 
-    RegisterResult(int code, String name) {
+    RegisterResult(int code, String description) {
         this.code = code;
-        this.name = name;
+        this.description = description;
     }
 
     public static RegisterResult fromCode(int code) {
@@ -35,7 +35,7 @@ public enum RegisterResult {
         return code;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 }

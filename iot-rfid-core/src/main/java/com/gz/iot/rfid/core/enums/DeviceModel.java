@@ -25,11 +25,11 @@ public enum DeviceModel {
     UNKNOWN(0x00, "未知");
 
     private final int code;
-    private final String name;
+    private final String description;
 
-    DeviceModel(int code, String name) {
+    DeviceModel(int code, String description) {
         this.code = code;
-        this.name = name;
+        this.description = description;
     }
 
     public static DeviceModel fromCode(int code) {
@@ -45,7 +45,7 @@ public enum DeviceModel {
         return code;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 }
