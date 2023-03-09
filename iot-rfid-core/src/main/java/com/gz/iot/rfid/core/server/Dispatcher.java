@@ -55,7 +55,6 @@ public class Dispatcher extends SimpleChannelInboundHandler<ByteBuf> {
         byteBuf.resetReaderIndex();
         byteBuf.readUnsignedShort();
         HeaderSegment header = new HeaderSegment(byteBuf);
-        log.info(header.toString());
 
         // 处理指令
         if (!handlerContainer.contains(header.getCommand())) {
@@ -77,7 +76,6 @@ public class Dispatcher extends SimpleChannelInboundHandler<ByteBuf> {
 
         IBodySegment bodySegment = BodySegmentParser.parse(header.getCommand(), byteBuf);
         if (bodySegment != null) {
-            log.info(bodySegment.toString());
             packet.setBodySegment(bodySegment);
             ctx.fireChannelRead(packet);
         }

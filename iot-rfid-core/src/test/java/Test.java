@@ -1,4 +1,5 @@
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * @author luojie
@@ -12,5 +13,17 @@ public class Test {
         for(byte b : bytes){
             System.out.printf("%x ", b);
         }
+
+        LocalDateTime now = LocalDateTime
+                .now()
+                .withYear(2020)
+                .withMonth(3)
+                .withDayOfMonth(9)
+                .withHour(13)
+                .withMinute(14)
+                .withSecond(15)
+                .withNano(0);
+
+        System.out.println(now.toString());
     }
 }

@@ -45,7 +45,7 @@ public class LoginHandler extends SimpleChannelInboundHandler<Packet> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet packet) throws Exception {
-        log.info("RegisterCommandHandler channelRead0, {}", packet.getBodySegment().toString());
+        log.info("LoginHandler channelRead0, {}", packet.toString());
 
         AckPacket ackPacket = new AckPacket();
 
