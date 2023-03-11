@@ -7,7 +7,7 @@ import com.gz.iot.rfid.core.enums.ProtocolVersion;
 import com.gz.iot.rfid.core.packet.AckPacket;
 import com.gz.iot.rfid.core.packet.HeaderSegment;
 import com.gz.iot.rfid.core.packet.Packet;
-import com.gz.iot.rfid.core.packet.body.HeartbeatAckSegment;
+import com.gz.iot.rfid.core.packet.body.ack.HeartbeatAckSegment;
 import com.gz.iot.rfid.core.server.HandlerContainer;
 import com.gz.iot.rfid.core.utils.SerialNumberUtils;
 import io.netty.channel.ChannelHandler;

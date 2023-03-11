@@ -56,12 +56,16 @@ public class HeaderSegment {
         }
         if (byteBuf.isReadable(2)) {
             this.command = Command.fromCode(byteBuf.readUnsignedShort());
+        } else {
+            this.command = Command.UNKNOWN;
         }
         if (byteBuf.isReadable(4)) {
             this.serialNumber = byteBuf.readInt();
         }
         if (byteBuf.isReadable(2)) {
             this.protocolVersion = ProtocolVersion.fromCode(byteBuf.readUnsignedShort());
+        } else {
+            this.protocolVersion = ProtocolVersion.UNKNOWN;
         }
         if (byteBuf.isReadable(2)) {
             this.securityCode = byteBuf.readUnsignedShort();

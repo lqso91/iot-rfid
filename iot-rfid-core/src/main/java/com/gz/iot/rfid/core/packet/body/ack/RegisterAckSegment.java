@@ -1,4 +1,4 @@
-package com.gz.iot.rfid.core.packet.body;
+package com.gz.iot.rfid.core.packet.body.ack;
 
 import com.gz.iot.rfid.core.enums.RegisterResult;
 import io.netty.buffer.ByteBuf;

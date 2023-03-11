@@ -28,14 +28,18 @@ public class RegisterSegment implements IBodySegment {
      * 注册码（4字节）
      */
     private int registerCode;
-    
+
     @Override
     public IBodySegment parse(ByteBuf byteBuf) {
         if (byteBuf.isReadable(1)) {
             this.deviceType = DeviceType.fromCode(byteBuf.readByte());
+        } else {
+            this.deviceType = DeviceType.UNKNOWN;
         }
         if (byteBuf.isReadable(1)) {
             this.deviceModel = DeviceModel.fromCode(byteBuf.readByte());
+        } else {
+            this.deviceModel = DeviceModel.UNKNOWN;
         }
         if (byteBuf.isReadable(4)) {
             this.registerCode = byteBuf.readInt();

@@ -1,6 +1,6 @@
 package com.gz.iot.rfid.core.packet;
 
-import com.gz.iot.rfid.core.packet.body.IBodyAckSegment;
+import com.gz.iot.rfid.core.packet.body.ack.IBodyAckSegment;
 import lombok.Data;
 
 /**

@@ -23,8 +23,8 @@ public enum Command {
     PARM_CONFIG_ACK(0x800A, "平台确认配置参数"),
     TAGMSG_REQ(0x0009, "终端请求标签消息"),
     TAGMSG_REQ_ACK(0x8009, "平台回应标签消息"),
-    SERVER_REQ(0x0005, "平台下发请求"),
-    SERVER_REQ_ACK(0x8005, "终端回复请求"),
+    DATA2(0x0005, "终端发送标签数据(2)"),
+    DATA2_ACK(0x8005, "平台确认收到标签数据(2)"),
     UNKNOWN(0x0000, "未知");
 
     /**

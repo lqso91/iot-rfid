@@ -32,9 +32,16 @@ public class VerificationUtils {
     };
 
     /**
-     * 查表法： 循环冗余校验-16（CCITT标准-0x1021）
+     * 循环冗余校验-16（CCITT标准-0x1021）
      */
     public static int crc16(byte[] data) {
+        return crc16_1(data);
+    }
+
+    /**
+     * 查表法： 循环冗余校验-16（CCITT标准-0x1021）
+     */
+    public static int crc16_1(byte[] data) {
         int crc = 0xFFFF;
         for (byte b : data) {
             int da = (crc / 256) & 0xFF;

@@ -1,6 +1,6 @@
-package com.gz.iot.rfid.core.packet.body;
+package com.gz.iot.rfid.core.packet.body.ack;
 
-import com.gz.iot.rfid.core.enums.LoginResult;
+import com.gz.iot.rfid.core.enums.OperationType;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import lombok.Data;
@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 /**
  * @author luojie
  * @email 806839696@qq.com
- * @createTime 2023/03/08 21:43
- * @description 登录确认指令报文体
+ * @createTime 2023/03/09 17:18
+ * @description 心跳确认指令报文体
  */
 @Data
-public class LoginAckSegment implements IBodyAckSegment {
+public class HeartbeatAckSegment implements IBodyAckSegment {
     public static final int SEGMENT_LENGTH = 7;
 
     /**
-     * 登录结果（1字节）
+     * 操作指示（1字节）
      */
-    private LoginResult loginResult;
+    private OperationType operationType;
 
     /**
      * 实时时间（6字节）
@@ -30,8 +30,8 @@ public class LoginAckSegment implements IBodyAckSegment {
     @Override
     public ByteBuf toByteBuf() {
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer(SEGMENT_LENGTH);
-        // 登录结果
-        byteBuf.writeByte(loginResult.getCode());
+        // 操作指示
+        byteBuf.writeByte(operationType.getCode());
         // 时间：年（x-2000）月日时分秒
         byteBuf.writeByte(dateTime.getYear() - 2000);
         byteBuf.writeByte(dateTime.getMonthValue());
